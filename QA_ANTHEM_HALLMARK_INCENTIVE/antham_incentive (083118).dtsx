@@ -1,0 +1,3538 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/23/2018 11:44:41 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SC32473"
+  DTS:CreatorName="CORP\Randall.Moore"
+  DTS:DTSID="{B89A1804-5306-4738-8F40-6CE0BFC3C970}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="13.0.2165.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="antham_incentive  083118"
+  DTS:PackageType="5"
+  DTS:VersionBuild="281"
+  DTS:VersionGUID="{E064655E-8239-42D2-A21C-F9F8E2D4D3EA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[output2]"
+      DTS:CreationName="FLATFILE"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{8289D685-DC4E-4202-A2A8-77BE12F6F363}"
+      DTS:ObjectName="output2">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::ServerPath] + @[User::FILENAME]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:AlwaysCheckForRowDelimiters="False"
+          DTS:ConnectionString="\\SC32473\bi-extracts-team\extracts\prod\anthemincentives\HWAY_INCENTIVE_Activity_Daily.2018080911555470.dat">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000A_"
+              DTS:MaximumWidth="2000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column 0"
+              DTS:DTSID="{701C9E8E-73BF-4239-934A-4F309C2B12A6}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[QA-D1FB54EE.temp]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{BC158B2E-1136-4C78-86B3-97BE30500E5C}"
+      DTS:ObjectName="QA-D1FB54EE.temp">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::EnvironmentName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Retain="True"
+          DTS:ConnectionString="Data Source=QA-D1FB54EE;Initial Catalog=tempdb;Provider=SQLNCLI11.1;Persist Security Info=True;Integrated Security=SSPI;Auto Translate=False;Trust Server Certificate=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ServerInstance1]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+      DTS:ObjectName="ServerInstance1">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::EnvironmentName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Retain="True"
+          DTS:ConnectionString="Data Source=QA-D1FB54EE;Initial Catalog=Extract_Sandbox;Provider=SQLNCLI11.1;Persist Security Info=True;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ServerInstance2]"
+      DTS:CreationName="OLEDB"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{F7760AB4-AAC0-426C-856B-CDB51A324E49}"
+      DTS:ObjectName="ServerInstance2">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::EnvironmentName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Retain="True"
+          DTS:ConnectionString="Data Source=QA-D1FB54EE;Initial Catalog=Extract_Sandbox;Provider=SQLNCLI11.1;Persist Security Info=True;Integrated Security=SSPI;Auto Translate=False;Trust Server Certificate=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DelayValidation="True"
+      DTS:Description="bisharecare"
+      DTS:DTSID="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::SMTPConnectionManager]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=bi-sharecare-com.mail.protection.outlook.com;UseWindowsAuthentication=False;EnableSsl=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{6DA13D17-4EFC-459C-8A9C-D7D0891C0B80}"
+      DTS:ObjectName="AdminEmailCC">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">randall.moore@sharecare.com</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{D5B9439C-0568-4E9B-91F1-439B7A7CFCA6}"
+      DTS:ObjectName="AdminEmailFrom">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">BIExtractOps@sharecare.com</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{57B7484A-B70C-46C4-AD9E-1F5CAA5F1694}"
+      DTS:ObjectName="AdminEmailTo">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">BIExtractOps@sharecare.com</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:Description="end date is normally run date"
+      DTS:DTSID="{4D57DBBA-5BEF-4E7B-8AC5-E8A85477BC8C}"
+      DTS:ObjectName="enddate">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">2018-01-01</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:Description="server name"
+      DTS:DTSID="{594A33A7-3CD5-434F-A781-0517793FCDED}"
+      DTS:ObjectName="EnvironmentName"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">QA-D1FB54EE</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:Description="output file path, network location"
+      DTS:DTSID="{179A2614-A451-48B0-B6E4-1EAA74A94388}"
+      DTS:ObjectName="ServerPath">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">\\QA-D1FB54EE\bi-extracts-team\extracts\prod\anthemincentives\</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{B94A274A-A0CA-4849-AE74-B8094FEA7DF8}"
+      DTS:ObjectName="SMTPConnectionManager">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">bi-sharecare-com.mail.protection.outlook.com</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:Description="start date is normally 30 days prior to run date"
+      DTS:DTSID="{2CDA3545-3F5E-4632-A7AE-88DD26EC5D4F}"
+      DTS:ObjectName="startdate"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">2018-01-01</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8CE1E819-A016-4574-9AEB-192D1D9268B2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::AdminEmailCC]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="AdminEmailCC">
+      <DTS:VariableValue
+        DTS:DataType="8">randall.moore@sharecare.com</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C0E80E8D-D4CF-4E22-B50C-91463B07B9E6}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::AdminEmailFrom]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="AdminEmailFrom">
+      <DTS:VariableValue
+        DTS:DataType="8">BIExtractOps@sharecare.com</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9B412C8E-30CF-47FB-AFCE-4B323F3B1493}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::AdminEmailTo]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="AdminEmailTo">
+      <DTS:VariableValue
+        DTS:DataType="8">BIExtractOps@sharecare.com</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:Description="the pull uses VARCHAR, and between clause"
+      DTS:DTSID="{2E4841C7-CDE1-4DFF-A80F-C5DE00B315C3}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::enddate]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="enddate">
+      <DTS:VariableValue
+        DTS:DataType="8">2018-01-01</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A43BC8C0-1E7C-4C48-997B-6D2E475AAF68}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::EnvironmentName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EnvironmentName">
+      <DTS:VariableValue
+        DTS:DataType="8">QA-D1FB54EE</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CDEE8908-1AE0-4844-B3A9-615993D9B0E7}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;HWAY_INCENTIVE_Activity_Daily.&quot; &#xA;+ @[User::stringdatetime] + &quot;.dat&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FILENAME">
+      <DTS:VariableValue
+        DTS:DataType="8">HWAY_INCENTIVE_Activity_Daily.2018080911555470.dat</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{887435C4-785E-4270-BB57-2A483D5A9D79}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="filepath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\frafs10\bi_operations\extracts\prod\anthemincentives\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{69C6FD0D-8FA1-4659-84CF-C4086A613538}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="fyi_prod">
+      <DTS:VariableValue
+        DTS:DataType="8">prod-ca93dd10</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F8EEBC88-25C0-45FE-84F6-29C0F9AD8E95}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="fyi_qa">
+      <DTS:VariableValue
+        DTS:DataType="8">QA-D1FB54EE</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{017FBCB0-DD28-4B65-9FEA-78442D626029}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="next_batchid">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D54EEFE9-9B18-40FF-A033-37872976D5F7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="recordcount">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BC6E2DCF-F524-4F19-9221-3ADD1F48D0CF}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="recordcountverified">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{35900DCB-2280-4BB9-B446-B814AEDA3EBA}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="getdate()"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="rundate">
+      <DTS:VariableValue
+        DTS:DataType="7">9/20/2018 2:42:24 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4172C3B3-1E74-4DD9-90AE-4CCB2AE36A7A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::ServerPath]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ServerPath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\SC32473\bi-extracts-team\extracts\prod\anthemincentives\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B4AB9705-6D87-4396-8B22-9F0773F6E3EF}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::ServerPathArchive]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ServerPathArchive">
+      <DTS:VariableValue
+        DTS:DataType="8">\\SC32473\bi-extracts-team\extracts\prod\anthemincentives\archive\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C48AA81F-6004-45F7-BE09-912CBFE68A4F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ServerPathFile">
+      <DTS:VariableValue
+        DTS:DataType="8">\\frafs10\bi_operations\extracts\prod\anthemincentives\*.dat</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CB868DDC-272C-4591-BC97-A892098E612B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SMTPConnectionManager">
+      <DTS:VariableValue
+        DTS:DataType="8">bi-sharecare-com.mail.protection.outlook.com</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:Description="varchar, and between clause "
+      DTS:DTSID="{CEE34009-7115-4E38-82BD-15CE6CE5DBD3}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::startdate]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="startdate">
+      <DTS:VariableValue
+        DTS:DataType="8">2018-01-01</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{61BC6AA3-9BAB-41B4-9C67-2E6D25DD937E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="stringdatetime">
+      <DTS:VariableValue
+        DTS:DataType="8">2018080911555470</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\an error occurred at step 1"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{5C10D9EC-EC17-4F66-8D8F-1921B297F72E}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="an error occurred at step 1"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS FAILED"
+          SendMailTask:MessageSource="FAILED AT STEP 1, RETRIEVING DATA FROM VERTICA.  NO RECORDS WERE PROCESSED." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\an error occurred at step 2"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{1879633A-3083-41DF-B635-4EBFE4CC9D47}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="an error occurred at step 2"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS FAILED"
+          SendMailTask:MessageSource="FAILED AT STEP 2, loading template table.  NO RECORDS WERE PROCESSED." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\an error occurred at step 3"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{C41DD6C8-24FB-4112-8999-11E06D18F012}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="an error occurred at step 3"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS FAILED"
+          SendMailTask:MessageSource="FAILED AT STEP 3, applying validation rules.  NO RECORDS WERE PROCESSED." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\an error occurred at step 4"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{3C6B1971-928A-400F-A1EE-612631B86AA8}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="an error occurred at step 4"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS FAILED"
+          SendMailTask:MessageSource="FAILED AT STEP 4, setting batchID.  NO RECORDS WERE PROCESSED." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\an error occurred at step 5"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{6543FEA8-8EC1-4111-8CF6-4F94CCD81AEF}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="an error occurred at step 5"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="4">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS FAILED"
+          SendMailTask:MessageSource="FAILED AT STEP 5, exporting file.  NO RECORDS WERE PROCESSED." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\an error occurred at step 5B"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{8D669989-C2E8-4E0D-BAC6-CAAB10C85969}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="an error occurred at step 5B"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="5">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS FAILED"
+          SendMailTask:MessageSource="FAILED AT STEP 5b, exporting file.  NO RECORDS TO PROCESS, BUT NO FILE CREATED." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\an error occurred at step 6"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{5D65BB91-0656-4D94-83A2-5C909801C811}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="an error occurred at step 6"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="6">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS FAILED"
+          SendMailTask:MessageSource="FAILED AT STEP 6, creating history records.  RECORDS WERE PROCESSED, BUT AN ERROR OCCURRED.  THIS STEP MUST RUN TO ENSURE DUPLICATION HISTORY IS KEPT." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\an error occurred at step _"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{1A294DA8-1E4E-47AE-9EBC-F41F1B860891}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="an error occurred at step _"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="7">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ATHEM HALLMARK INCENTIVE FAILED"
+          SendMailTask:MessageSource="FAILED AT STEP _.  NO RECORDS WERE PROCESSED," xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\create xa_anthem_template"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{962E69FB-0608-436A-B15C-4CE757CD3329}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="create xa_anthem_template">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\create xa_anthem_template\collect records to process"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{FCCF0623-A865-42A4-AC5C-9B184A0787B2}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="collect records to process"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="truncate table [dbo].[XA_ANTHEM_TEMPLATE];&#xA;insert into [dbo].[XA_ANTHEM_TEMPLATE](&#xA;[INDV_INCENTIVE_EVENT_ID],&#xA;[HISTORY_ID],&#xA;[event_completed_date]&#xA;,secure_id)&#xA;select distinct temp.[history_ident], &#xA;temp.[history_id],&#xA;[reward_earned_date],&#xA;temp.secure_id&#xA;from [dbo].[XA_sc_incent_member_history_temp] temp&#xA;left join [dbo].[XA_INCENTIVE_EVENT_MAP] map&#xA;on temp.event_identifier=map.event_identifier&#xA;where map.included=1 and temp.event_identifier is not null;&#xA;------second group matches on event_description&#xA;insert into [dbo].[XA_ANTHEM_TEMPLATE](&#xA;[INDV_INCENTIVE_EVENT_ID],&#xA;[HISTORY_ID],&#xA;[event_completed_date],&#xA;secure_id)&#xA;select distinct temp.[history_ident], &#xA;temp.[history_id],&#xA;[reward_earned_date],&#xA;temp.secure_id&#xA;from [dbo].[XA_sc_incent_member_history_temp] temp&#xA;join [dbo].[XA_INCENTIVE_EVENT_MAP] map&#xA;on temp.event_description=map.event_description&#xA;where map.included=1 and temp.event_identifier is null;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\create xa_anthem_template\update for membership"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A24FFF56-9418-4443-AD29-801038E5D24A}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="update for membership"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F7760AB4-AAC0-426C-856B-CDB51A324E49}"
+              SQLTask:SqlStatementSource=";with cte_update as(&#xA;select distinct&#xA;template.HISTORY_ID,&#xA;map.membership_identity, &#xA;map.[org_unit_determinant_1],&#xA;org.[vendor_program_id],&#xA;program2.milestone_id,&#xA;program2.activity_id&#xA;--secure id is the only member link&#xA;from [dbo].[XA_sc_incent_member_history_temp] as temp&#xA;left join [dbo].[XA_MEMBER_MAP] as map&#xA;on temp.[secure_id]=map.secure_id&#xA;--joining source to child by unique key&#xA;join [dbo].[XA_ANTHEM_TEMPLATE] as template&#xA;on template.history_id=temp.history_id&#xA;--gets the orgunit&#xA;left join [dbo].[XA_SCP_ORG_UNITS] as org&#xA;on map.[ouid]=org.ouid and org.[ou_active_flag]=1&#xA;--join the event item to the source temp&#xA;left join [dbo].[XA_INCENTIVE_EVENT_MAP] as program2&#xA;on program2.event_identifier=temp.event_identifier&#xA;and program2.event_description=temp.event_description&#xA;and org.vendor_program_id=program2.program_id)&#xA;update [dbo].[XA_ANTHEM_TEMPLATE]&#xA;set membership_identity=cte_update.membership_identity, &#xA;org_unit_determinant_1=cte_update.[org_unit_determinant_1],&#xA;[VENDOR_PROGRAM_ID]=cte_update.[vendor_program_id],&#xA;vendor_milestone_id=cte_update.milestone_id,&#xA;vendor_activity_id=cte_update.activity_id&#xA;from  [dbo].[XA_ANTHEM_TEMPLATE] as template&#xA;join cte_update&#xA;on cte_update.HISTORY_ID=template.HISTORY_ID;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\create xa_anthem_template.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{4D978B4D-BF9F-4E75-914F-F32F7101444F}"
+          DTS:From="Package\create xa_anthem_template\collect records to process"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\create xa_anthem_template\update for membership" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\export file"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{996FB2D6-A20B-464B-86E6-4DA25B1E85F8}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="export file">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\export file\export output template"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{A739A82E-F595-41F6-9369-39BA1A6A267D}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="export output template"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\export file\export output template\Flat File Destination"
+                  componentClassID="Microsoft.FlatFileDestination"
+                  contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Flat File Destination"
+                  localeId="1033"
+                  name="Flat File Destination"
+                  validateExternalMetadata="False">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether the data will overwrite or append to the destination file."
+                      name="Overwrite">true</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the text to write to the destination file before any data is written."
+                      expressionType="Notify"
+                      name="Header" />
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\export file\export output template\Flat File Destination.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[output2]"
+                      connectionManagerRefId="Package.ConnectionManagers[output2]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\export file\export output template\Flat File Destination.Inputs[Flat File Destination Input]"
+                      hasSideEffects="true"
+                      name="Flat File Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\export file\export output template\Flat File Destination.Inputs[Flat File Destination Input].Columns[ROWVALUE]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="2000"
+                          cachedName="ROWVALUE"
+                          externalMetadataColumnId="Package\export file\export output template\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
+                          lineageId="Package\export file\export output template\Sort.Outputs[Sort Output].Columns[ROWVALUE]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\export file\export output template\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          name="Column 0" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                </component>
+                <component
+                  refId="Package\export file\export output template\output template"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="output template"
+                  usesDispositions="true"
+                  validateExternalMetadata="False"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[XA_ANTHEM_OUTPUT_TEMPLATE]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\export file\export output template\output template.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[ServerInstance1]"
+                      connectionManagerRefId="Package.ConnectionManagers[ServerInstance1]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\export file\export output template\output template.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].Columns[ROWVALUE]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].ExternalColumns[ROWVALUE]"
+                          length="2000"
+                          lineageId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].Columns[ROWVALUE]"
+                          name="ROWVALUE"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].Columns[COL_ORDER]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].ExternalColumns[COL_ORDER]"
+                          lineageId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].Columns[COL_ORDER]"
+                          name="COL_ORDER"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].ExternalColumns[ROWVALUE]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          name="ROWVALUE" />
+                        <externalMetadataColumn
+                          refId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].ExternalColumns[COL_ORDER]"
+                          dataType="i4"
+                          name="COL_ORDER" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ROWVALUE]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          lineageId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ROWVALUE]"
+                          name="ROWVALUE" />
+                        <outputColumn
+                          refId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output].Columns[COL_ORDER]"
+                          dataType="i4"
+                          lineageId="Package\export file\export output template\output template.Outputs[OLE DB Source Error Output].Columns[COL_ORDER]"
+                          name="COL_ORDER" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\export file\export output template\Sort"
+                  componentClassID="Microsoft.Sort"
+                  contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+                  name="Sort"
+                  validateExternalMetadata="False"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                      name="EliminateDuplicates">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the maximum number of threads to use for sorting."
+                      expressionType="Notify"
+                      name="MaximumThreads">-1</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\export file\export output template\Sort.Inputs[Sort Input]"
+                      name="Sort Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\export file\export output template\Sort.Inputs[Sort Input].Columns[ROWVALUE]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="2000"
+                          cachedName="ROWVALUE"
+                          lineageId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].Columns[ROWVALUE]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\export file\export output template\Sort.Inputs[Sort Input].Columns[COL_ORDER]"
+                          cachedDataType="i4"
+                          cachedName="COL_ORDER"
+                          lineageId="Package\export file\export output template\output template.Outputs[OLE DB Source Output].Columns[COL_ORDER]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">1</property>
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\export file\export output template\Sort.Outputs[Sort Output]"
+                      isSorted="true"
+                      name="Sort Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\export file\export output template\Sort.Outputs[Sort Output].Columns[ROWVALUE]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          lineageId="Package\export file\export output template\Sort.Outputs[Sort Output].Columns[ROWVALUE]"
+                          name="ROWVALUE">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\export file\export output template\output template.Outputs[OLE DB Source Output].Columns[ROWVALUE]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\export file\export output template\Sort.Outputs[Sort Output].Columns[COL_ORDER]"
+                          dataType="i4"
+                          lineageId="Package\export file\export output template\Sort.Outputs[Sort Output].Columns[COL_ORDER]"
+                          name="COL_ORDER"
+                          sortKeyPosition="1">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\export file\export output template\output template.Outputs[OLE DB Source Output].Columns[COL_ORDER]}</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\export file\export output template.Paths[OLE DB Source Output]"
+                  endId="Package\export file\export output template\Sort.Inputs[Sort Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\export file\export output template\output template.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\export file\export output template.Paths[Sort Output]"
+                  endId="Package\export file\export output template\Flat File Destination.Inputs[Flat File Destination Input]"
+                  name="Sort Output"
+                  startId="Package\export file\export output template\Sort.Outputs[Sort Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file\move file"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{DF6E242D-6C8D-4956-89AC-8D565C0F502B}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="move file"
+          DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="{8289D685-DC4E-4202-A2A8-77BE12F6F363}"
+              TaskDestinationPath="User::ServerPathArchive"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file\populate output template"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C4C6E20B-B773-48FE-8886-7DC47060EEE6}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="populate output template"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="--truncate table&#xA;truncate table [dbo].[XA_ANTHEM_OUTPUT_TEMPLATE];&#xA;--append header&#xA;declare @vbatch_id varchar(12);&#xA;declare @vdate date; set @vdate=(cast(getdate() as date));&#xA;declare @vdate2 varchar(12); set @vdate2=@vdate&#xA;set @vbatch_id = (select max(batch_id) from [dbo].[XA_ANTHEM_TEMPLATE]) &#xA;insert into [dbo].[XA_ANTHEM_OUTPUT_TEMPLATE]([ROWVALUE],[COL_ORDER])&#xA;--select 'HDR|'+@vdate2+'|CHS|'+@vbatch_id+'|v1.01',1&#xA;values ('HDR|'+CONVERT(VARCHAR(30),getdate(),112)+'|CHS|'+@vbatch_id+'|v1.01',1);&#xA;--select * from [dbo].[XA_ANTHEM_OUTPUT_TEMPLATE]&#xA;--------------&#xA;--insert details&#xA;insert into [dbo].[XA_ANTHEM_OUTPUT_TEMPLATE]([ROWVALUE],[COL_ORDER])&#xA;select 'DTL|'+CONVERT(VARCHAR(15),[INDV_INCENTIVE_EVENT_ID])+'|'+CONVERT(VARCHAR(32),[MEMBERSHIP_IDENTITY])+'|'&#xA;+[ORG_UNIT_DETERMINANT_1]+'|'+[VENDOR_PROGRAM_ID]+'|'+[VENDOR_MILESTONE_ID]+'|'&#xA;+[VENDOR_ACTIVITY_ID]+'|'+&#xA;CONVERT(nvarchar(30), [EVENT_COMPLETED_DATE], 112)+&#xA;case &#xA;when  DATEPART( hour , [EVENT_COMPLETED_DATE] )&lt;10           &#xA;then '0'+DATENAME( hour , [EVENT_COMPLETED_DATE] )&#xA;ELSE DATENAME( hour , [EVENT_COMPLETED_DATE])&#xA;END+&#xA;case &#xA;when  DATEPART( MINUTE , [EVENT_COMPLETED_DATE] )&lt;10           &#xA;then '0'+DATENAME( MINUTE , [EVENT_COMPLETED_DATE] )&#xA;ELSE DATENAME( MINUTE , [EVENT_COMPLETED_DATE])&#xA;END+&#xA;case &#xA;when  DATEPART( SECOND , [EVENT_COMPLETED_DATE] )&lt;10           &#xA;then '0'+DATENAME( SECOND , [EVENT_COMPLETED_DATE] )&#xA;ELSE DATENAME( SECOND , [EVENT_COMPLETED_DATE])&#xA;END--+&#xA;--case &#xA;--when  DATEPART( MILLISECOND , [EVENT_COMPLETED_DATE] )&lt;10           &#xA;--then '0'+DATENAME( MILLISECOND , [EVENT_COMPLETED_DATE] )&#xA;--ELSE DATENAME( MILLISECOND , [EVENT_COMPLETED_DATE])&#xA;--END&#xA;+'|||||||||','2'&#xA;from [dbo].[XA_ANTHEM_TEMPLATE]&#xA;where [verified]=1 and [BATCH_ID] is not null&#xA;ORDER BY [INDV_INCENTIVE_EVENT_ID] ASC;&#xA;----------------&#xA;--insert trl&#xA;declare @vlines int; set @vlines=( select max([batch_count]) from [dbo].[XA_ANTHEM_TEMPLATE])&#xA;insert into [dbo].[XA_ANTHEM_OUTPUT_TEMPLATE]([ROWVALUE],[COL_ORDER])&#xA;values( 'TRL|'+convert(varchar(10),@vlines),3);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file\set date time string 1"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{193069E8-6209-4BB0-9573-D813DC007B2B}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="set date time string 1"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="select CONVERT(nvarchar(30), getdate(), 112)+'_'+&#xA;case &#xA;when  DATEPART( hour , getdate())&lt;10           &#xA;then '0'+DATENAME( hour , getdate())&#xA;ELSE DATENAME( hour , getdate())&#xA;END+&#xA;case &#xA;when  DATEPART( MINUTE , getdate())&lt;10           &#xA;then '0'+DATENAME( MINUTE , getdate() )&#xA;ELSE DATENAME( MINUTE , getdate())&#xA;END+&#xA;case &#xA;when  DATEPART( SECOND , getdate() )&lt;10           &#xA;then '0'+DATENAME( SECOND , getdate() )&#xA;ELSE DATENAME( SECOND , getdate())&#xA;END+&#xA;case &#xA;when  DATEPART( MILLISECOND , getdate() )&lt;10           &#xA;then '0'+DATENAME( MILLISECOND , getdate() )&#xA;ELSE DATENAME( MILLISECOND , getdate())&#xA;END as stringdatetime"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="stringdatetime"
+                SQLTask:DtsVariableName="User::stringdatetime" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file\set the errortext with filename"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{F5D8C0A6-984D-43FF-8A4A-0BB7612040DF}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="set the errortext with filename"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F7760AB4-AAC0-426C-856B-CDB51A324E49}"
+              SQLTask:SqlStatementSource="update [dbo].[XA_ANTHEM_TEMPLATE]&#xA;set [errortext]=?&#xA;from  [dbo].[XA_ANTHEM_TEMPLATE]&#xA;where verified=1" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::FILENAME"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file\TF Secure FTP Task"
+          DTS:CreationName="PW.TaskFactory.SFTPTask"
+          DTS:Description="TF Secure FTP Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{B2592033-B094-459E-BEA9-443040C28811}"
+          DTS:ExecutableType="PW.TaskFactory.SFTPTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TF Secure FTP Task"
+          DTS:TaskContact="Secure FTP Task;Pragmatic Works, Inc; Task Factory (c) 2009 - 2016 Pragmatic Works, Inc; http://www.pragmaticworks.com;support@pragmaticworks.com"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SFTPTask
+              IncludeSubdirectories="True"
+              TaskAction="0"
+              StopPackageOnFailure="True"
+              LocalPathStoredInVariable="False"
+              LogFileLocation=""
+              NewFileName=""
+              LocalFileVariableName=""
+              FileFilter=""
+              LocalFileFilter=""
+              ResultVariable=""
+              LocalConnectionManagerName=""
+              OverwriteLocalFile="False"
+              RemotePathContainsFileName="False"
+              RemoteFTPConnectionName=""
+              RemotePathStoredInVariable="False"
+              RemoteDirectoryOrFile=""
+              OverwriteRemoteFile="False"
+              ShowDebugInfo="False"
+              SSHMaxPacketSize="0" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{7A19ACF5-6F21-44BA-BCFC-F71DF2E50C8A}"
+          DTS:From="Package\export file\populate output template"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\export file\export output template" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{D97D15D6-C46A-42A8-8088-8EA7B30780E5}"
+          DTS:From="Package\export file\set date time string 1"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\export file\populate output template" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{202A7E8E-B472-4D9C-9FBA-9CDDB2895EE8}"
+          DTS:From="Package\export file\export output template"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\export file\set the errortext with filename" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{7F2982B6-FD77-4F55-8389-335FF049AB67}"
+          DTS:From="Package\export file\set the errortext with filename"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\export file\TF Secure FTP Task" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{D8B4FEFA-9C6F-4565-BF76-A627EFB9D39B}"
+          DTS:From="Package\export file\TF Secure FTP Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\export file\move file" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\export file 1"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{9D081AF3-592A-4B81-B081-3A9BAC2420B6}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="export file 1">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\export file 1\export output template"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{0994B2CD-AA87-4AAC-8E67-B19B7ADF2A92}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="export output template"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\export file 1\export output template\Flat File Destination"
+                  componentClassID="Microsoft.FlatFileDestination"
+                  contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Flat File Destination"
+                  localeId="1033"
+                  name="Flat File Destination"
+                  validateExternalMetadata="False">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether the data will overwrite or append to the destination file."
+                      name="Overwrite">true</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the text to write to the destination file before any data is written."
+                      expressionType="Notify"
+                      name="Header" />
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\export file 1\export output template\Flat File Destination.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[output2]"
+                      connectionManagerRefId="Package.ConnectionManagers[output2]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\export file 1\export output template\Flat File Destination.Inputs[Flat File Destination Input]"
+                      hasSideEffects="true"
+                      name="Flat File Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\export file 1\export output template\Flat File Destination.Inputs[Flat File Destination Input].Columns[ROWVALUE]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="2000"
+                          cachedName="ROWVALUE"
+                          externalMetadataColumnId="Package\export file 1\export output template\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
+                          lineageId="Package\export file 1\export output template\Sort.Outputs[Sort Output].Columns[ROWVALUE]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\export file 1\export output template\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          name="Column 0" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                </component>
+                <component
+                  refId="Package\export file 1\export output template\output template"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="output template"
+                  usesDispositions="true"
+                  validateExternalMetadata="False"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[XA_ANTHEM_OUTPUT_TEMPLATE]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\export file 1\export output template\output template.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[ServerInstance1]"
+                      connectionManagerRefId="Package.ConnectionManagers[ServerInstance1]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].Columns[ROWVALUE]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="IgnoreFailure"
+                          externalMetadataColumnId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].ExternalColumns[ROWVALUE]"
+                          length="2000"
+                          lineageId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].Columns[ROWVALUE]"
+                          name="ROWVALUE"
+                          truncationRowDisposition="IgnoreFailure" />
+                        <outputColumn
+                          refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].Columns[COL_ORDER]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].ExternalColumns[COL_ORDER]"
+                          lineageId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].Columns[COL_ORDER]"
+                          name="COL_ORDER"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].ExternalColumns[ROWVALUE]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          name="ROWVALUE" />
+                        <externalMetadataColumn
+                          refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].ExternalColumns[COL_ORDER]"
+                          dataType="i4"
+                          name="COL_ORDER" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ROWVALUE]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          lineageId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ROWVALUE]"
+                          name="ROWVALUE" />
+                        <outputColumn
+                          refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output].Columns[COL_ORDER]"
+                          dataType="i4"
+                          lineageId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Error Output].Columns[COL_ORDER]"
+                          name="COL_ORDER" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\export file 1\export output template\Sort"
+                  componentClassID="Microsoft.Sort"
+                  contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+                  name="Sort"
+                  validateExternalMetadata="False"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                      name="EliminateDuplicates">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the maximum number of threads to use for sorting."
+                      expressionType="Notify"
+                      name="MaximumThreads">-1</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\export file 1\export output template\Sort.Inputs[Sort Input]"
+                      name="Sort Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\export file 1\export output template\Sort.Inputs[Sort Input].Columns[ROWVALUE]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="2000"
+                          cachedName="ROWVALUE"
+                          lineageId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].Columns[ROWVALUE]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\export file 1\export output template\Sort.Inputs[Sort Input].Columns[COL_ORDER]"
+                          cachedDataType="i4"
+                          cachedName="COL_ORDER"
+                          lineageId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].Columns[COL_ORDER]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">1</property>
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\export file 1\export output template\Sort.Outputs[Sort Output]"
+                      isSorted="true"
+                      name="Sort Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\export file 1\export output template\Sort.Outputs[Sort Output].Columns[ROWVALUE]"
+                          codePage="1252"
+                          dataType="str"
+                          length="2000"
+                          lineageId="Package\export file 1\export output template\Sort.Outputs[Sort Output].Columns[ROWVALUE]"
+                          name="ROWVALUE">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].Columns[ROWVALUE]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\export file 1\export output template\Sort.Outputs[Sort Output].Columns[COL_ORDER]"
+                          dataType="i4"
+                          lineageId="Package\export file 1\export output template\Sort.Outputs[Sort Output].Columns[COL_ORDER]"
+                          name="COL_ORDER"
+                          sortKeyPosition="1">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\export file 1\export output template\output template.Outputs[OLE DB Source Output].Columns[COL_ORDER]}</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\export file 1\export output template.Paths[OLE DB Source Output]"
+                  endId="Package\export file 1\export output template\Sort.Inputs[Sort Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\export file 1\export output template\output template.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\export file 1\export output template.Paths[Sort Output]"
+                  endId="Package\export file 1\export output template\Flat File Destination.Inputs[Flat File Destination Input]"
+                  name="Sort Output"
+                  startId="Package\export file 1\export output template\Sort.Outputs[Sort Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file 1\move file"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{CD63A626-37A8-4818-A782-26BC1C2A62FD}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="move file"
+          DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="5">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="{8289D685-DC4E-4202-A2A8-77BE12F6F363}"
+              TaskDestinationPath="User::ServerPathArchive"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file 1\populate output template"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{BDD9164D-9EF5-4A9B-A781-C83A104A2495}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="populate output template"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="5">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="--truncate table&#xA;truncate table [dbo].[XA_ANTHEM_OUTPUT_TEMPLATE];&#xA;&#xA;----------------&#xA;--insert trl&#xA;declare @vlines int; set @vlines=( select max([batch_count]) from [dbo].[XA_ANTHEM_TEMPLATE])&#xA;insert into [dbo].[XA_ANTHEM_OUTPUT_TEMPLATE]([ROWVALUE],[COL_ORDER])&#xA;values( 'TRL|'+'0',3);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file 1\set date time string 1"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0CC65E3C-2851-4DCF-AB52-E9AC3E79E3A5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="set date time string 1"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="5">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="select CONVERT(nvarchar(30), getdate(), 112)+'_'+&#xA;case &#xA;when  DATEPART( hour , getdate())&lt;10           &#xA;then '0'+DATENAME( hour , getdate())&#xA;ELSE DATENAME( hour , getdate())&#xA;END+&#xA;case &#xA;when  DATEPART( MINUTE , getdate())&lt;10           &#xA;then '0'+DATENAME( MINUTE , getdate() )&#xA;ELSE DATENAME( MINUTE , getdate())&#xA;END+&#xA;case &#xA;when  DATEPART( SECOND , getdate() )&lt;10           &#xA;then '0'+DATENAME( SECOND , getdate() )&#xA;ELSE DATENAME( SECOND , getdate())&#xA;END+&#xA;case &#xA;when  DATEPART( MILLISECOND , getdate() )&lt;10           &#xA;then '0'+DATENAME( MILLISECOND , getdate() )&#xA;ELSE DATENAME( MILLISECOND , getdate())&#xA;END as stringdatetime"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="stringdatetime"
+                SQLTask:DtsVariableName="User::stringdatetime" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\export file 1\TF Secure FTP Task 1"
+          DTS:CreationName="PW.TaskFactory.SFTPTask"
+          DTS:Description="TF Secure FTP Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{FA39FD00-6CC0-4D82-9E58-C41752258161}"
+          DTS:ExecutableType="PW.TaskFactory.SFTPTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TF Secure FTP Task 1"
+          DTS:TaskContact="Secure FTP Task;Pragmatic Works, Inc; Task Factory (c) 2009 - 2016 Pragmatic Works, Inc; http://www.pragmaticworks.com;support@pragmaticworks.com"
+          DTS:ThreadHint="5">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SFTPTask
+              IncludeSubdirectories="True"
+              TaskAction="0"
+              StopPackageOnFailure="True"
+              LocalPathStoredInVariable="False"
+              LogFileLocation=""
+              NewFileName=""
+              LocalFileVariableName=""
+              FileFilter=""
+              LocalFileFilter=""
+              ResultVariable=""
+              LocalConnectionManagerName=""
+              OverwriteLocalFile="False"
+              RemotePathContainsFileName="False"
+              RemoteFTPConnectionName=""
+              RemotePathStoredInVariable="False"
+              RemoteDirectoryOrFile=""
+              OverwriteRemoteFile="False"
+              ShowDebugInfo="False"
+              SSHMaxPacketSize="0" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file 1.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{BF4FB603-1F64-4C75-8411-B0F71328F62E}"
+          DTS:From="Package\export file 1\populate output template"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\export file 1\export output template" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file 1.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{624F9E73-23F8-4DFD-82E2-35A793A39AD6}"
+          DTS:From="Package\export file 1\set date time string 1"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\export file 1\populate output template" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file 1.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{829D899F-4608-422F-8EA3-A7DBF604ACE7}"
+          DTS:From="Package\export file 1\export output template"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\export file 1\TF Secure FTP Task 1" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\export file 1.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{48D029BE-8427-4D46-B13F-0DF81E1BA80E}"
+          DTS:From="Package\export file 1\TF Secure FTP Task 1"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\export file 1\move file" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\FINAL CLEANUP"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{3561CC1B-6B2F-4FBA-A294-1E88BD62ADBD}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="FINAL CLEANUP">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\FINAL CLEANUP\MOVE TO TEMPLATE_HIST"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{BF3F72AF-913C-444D-A479-B5FF4912B157}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="MOVE TO TEMPLATE_HIST"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="6">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="insert into [dbo].[XA_ANTHEM_TEMPLATE_HIST] ([INDV_INCENTIVE_EVENT_ID], [INCENTIVE_EVENT_VALUE_ID], [HISTORY_ID], [MEMBERSHIP_ID], [MEMBERSHIP_IDENTITY], [ORG_UNIT_DETERMINANT_1], [VENDOR_PROGRAM_ID], [VENDOR_MILESTONE_ID], [VENDOR_ACTIVITY_ID], [EVENT_COMPLETED_DATE], [BATCH_ID], [CREATED_DATE], [verified], [errortext], [batch_count],secure_id)&#xA;select [INDV_INCENTIVE_EVENT_ID], [INCENTIVE_EVENT_VALUE_ID], [HISTORY_ID], [MEMBERSHIP_ID], [MEMBERSHIP_IDENTITY], [ORG_UNIT_DETERMINANT_1], [VENDOR_PROGRAM_ID], [VENDOR_MILESTONE_ID], [VENDOR_ACTIVITY_ID], [EVENT_COMPLETED_DATE], [BATCH_ID], [CREATED_DATE], [verified], [errortext], [batch_count],secure_id&#xA;from [dbo].[XA_ANTHEM_TEMPLATE];&#xA;--delete [XA_ANTHEM_TEMPLATE_HIST]&#xA;--where [CREATED_DATE]&gt;'2018-08-01'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\load new history"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{1D80B88C-5AE7-453B-8949-6C226F2E7B4E}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="load new history">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\load new history\get member map"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{5FDD2DC0-3AC3-40E3-96D5-C9D8883E3ABE}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="get member map">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\load new history\get member map\load member_map"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{48A62981-504B-4D37-8B8F-E60693FBCE92}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="load member_map"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{F7760AB4-AAC0-426C-856B-CDB51A324E49}"
+                  SQLTask:SqlStatementSource="TRUNCATE TABLE [dbo].[XA_MEMBER_MAP];&#xA;INSERT INTO[dbo].[XA_MEMBER_MAP]( [guid],[membership_identity], [Misc100_Desc], [ouid]&#xA;, [org_unit_determinant_1],secure_id)&#xA; --below here must be formated for sp and oracle &#xA; select distinct GUID,member_identity,Misc100_Desc, org_unit_id&#xA;       ,org_unit_determinant_1,secure_id&#xA; FROM OPENQUERY(Vertica, &#xA;'select distinct rawfd.GUID,Misc100 as member_identity,Misc100_Desc, ocx.ouid as org_unit_id&#xA;       ,GroupId1 as org_unit_determinant_1,em.secure_id&#xA;from scp.ah_member_eligibility_RawFileData_US rawfd&#xA;join scp.v_organizational_unit_contract_xref ocx&#xA;   on rawfd.org_unit_id=ocx.ouname&#xA;join (select secure_id, guid &#xA;      from sc_secure.sc_employer_membership &#xA;      union &#xA;      select secure_id, guid &#xA;      from sc_secure.sc_employer_membership_none&#xA;     union&#xA;     select secure_id,guid&#xA;     from sc_secure.sc_membership_fallout&#xA;) em&#xA;   on rawfd.guid = em.guid&#xA;group by rawfd.GUID,Misc100 ,Misc100_Desc, ocx.ouid,GroupId1,em.secure_id&#xA;having ocx.ouid IN(''501835'',''501836'',''501837'',''501948'',''501853'',''501854'',''501858'',''501859'',''501861''&#xA;,''501863'',''501866'',''501870'',''501876''&#xA;                ,''501882'',''501887'',''501890'',''501891'',''501892'',''501900'',''501907'',''501912'',''501917''&#xA;                ,''501926'',''501918'',''501922'',''501924''&#xA;                ,''501935'',''501801'',''501802'',''501803'',''501973'')' );&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\load new history\get sc_incentive_member_history"
+          DTS:CreationName="STOCK:SEQUENCE"
+          DTS:Description="Sequence Container"
+          DTS:DTSID="{1E1E11DE-7F43-4C3D-8445-ECCEF0BCF7AB}"
+          DTS:ExecutableType="STOCK:SEQUENCE"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="get sc_incentive_member_history">
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\load new history\get sc_incentive_member_history\collect sc_incent_member_history_temp"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:DelayValidation="True"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{F2DC1D45-5647-4431-A433-EF5665120FC3}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:FailPackageOnFailure="True"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="collect sc_incent_member_history_temp"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+                  SQLTask:SqlStatementSource="declare @vstartdate varchar(30), &#xA;@venddate varchar(30),&#xA;@vsql varchar(max),@date1 date, @date2 date, @date1a varchar(30), @date2a varchar(30);&#xA;&#xA;--set @vstartdate='2018-01-01'&#xA;--set @venddate='2018-01-01'&#xA;set @vstartdate=?;&#xA;set @venddate=?;&#xA;&#xA;&#xA;&#xA;set @date1a=(select &#xA;case &#xA;when @vstartdate='2018-01-01' then  datename(yyyy,getdate()-30)+'-'+CONVERT(nvarchar(2),datepart(mm,getdate()-30))+'-'+datename(dd,getdate()-30)&#xA;when @vstartdate is null then datename(yyyy,getdate()-30)+'-'+CONVERT(nvarchar(2),datepart(mm,getdate()-30))+'-'+datename(dd,getdate()-30)&#xA;when @vstartdate&lt;&gt;'2018-01-01' then @vstartdate&#xA;end);&#xA;set @date2a=(select &#xA;case &#xA;when @venddate='2018-01-01' then datename(yyyy,getdate())+'-'+CONVERT(nvarchar(2),datepart(mm,getdate()))+'-'+datename(dd,getdate())&#xA;when @venddate is null then datename(yyyy,getdate())+'-'+CONVERT(nvarchar(2),datepart(mm,getdate()))+'-'+datename(dd,getdate())&#xA;when @venddate&lt;&gt;'2018-01-01' then @venddate&#xA;end);&#xA;--&#xA;&#xA;--CONVERT(nvarchar(30), getdate(), 112)&#xA;--set @date2a=CONVERT(nvarchar(30), getdate()-30, 112)&#xA;--select @date1,@date2,@date1a,@date2a&#xA;&#xA;&#xA;&#xA;--set @vstartdate = convert(varchar(30),'2018-04-01');&#xA;--set @venddate= convert(varchar(30),'2018-04-30');&#xA;&#xA;truncate table dbo.XA_sc_incent_member_history_temp;&#xA;&#xA;set @vsql = concat('insert into dbo.XA_sc_incent_member_history_temp&#xA;select history_id,history_type,program_id,secure_id,&#xA;        member_program_id,cast(last_updated_date as datetime) as last_updated_date,&#xA;        point_balance,reward_type,reward_member_id,reward_points,&#xA;        reward_word,cast(reward_earned_date as datetime) as reward_earned_date,&#xA;        cast(reward_activity_date as datetime) as reward_activity_date,reward_event_id,&#xA;        cast(redemption_date as datetime) as redemption_date,points_redeemed,&#xA;        points_word,event_type,event_description,event_identifier,client_id&#xA;FROM OPENQUERY(Vertica, &#xA;   ''SELECT history_id,history_type,program_id,secure_id,&#xA;        member_program_id,cast(last_updated_date as datetime) as last_updated_date,&#xA;        point_balance,reward_type,reward_member_id,reward_points,&#xA;        reward_word,cast(reward_earned_date as datetime) as reward_earned_date,&#xA;        cast(reward_activity_date as datetime) as reward_activity_date,reward_event_id,&#xA;        cast(redemption_date as datetime) as redemption_date,points_redeemed,&#xA;        points_word,event_type,event_description,event_identifier,client_id &#xA;from incentives.sc_incent_member_history                &#xA;    where CLIENT_ID = ''''HP_ANTHEM''''&#xA;    and REWARD_EARNED_DATE between''''',@date1a,'''''&#xA;&#x9;and''''',@date2a,'''''&#xA;    and history_type = ''''memberHistory-historyType-earned'''''')')&#xA;&#x9;exec (@vsql)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="0"
+                    SQLTask:DtsVariableName="User::startdate"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="1"
+                    SQLTask:DtsVariableName="User::enddate"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\load new history.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{03E80E96-8FE7-438D-A536-D4A622FBDA05}"
+          DTS:From="Package\load new history\get sc_incentive_member_history"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\load new history\get member map" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\no records to process"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{1DF390A9-3084-41FC-BD20-8A5F52ACBC40}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="no records to process"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="8">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS COMPLETED BUT PROCESSED NO RECORDS"
+          SendMailTask:MessageSource="NO RECORDS WERE PROCESSED, BUT A FILE WAS CREATED." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\rules of disqualification"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{31FDEDA8-770D-4323-BBBE-E8F7485C02DC}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="rules of disqualification">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\rules of disqualification\rule 1 incomplete data"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{56807060-88D3-48E3-A9D6-BB59058F8554}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="rule 1 incomplete data"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="--first rule, incomplete data&#xA;update [dbo].[XA_ANTHEM_TEMPLATE]&#xA;set [verified]=2, [errortext]='not all information provided'&#xA;where [INDV_INCENTIVE_EVENT_ID] is null&#xA;or [MEMBERSHIP_IDENTITY] is null&#xA;or [ORG_UNIT_DETERMINANT_1] is null&#xA;or [VENDOR_PROGRAM_ID] is null&#xA;or [VENDOR_MILESTONE_ID] is null&#xA;or [VENDOR_ACTIVITY_ID] is null&#xA;or [EVENT_COMPLETED_DATE] is null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\rules of disqualification\rule 2 duped records"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{5B650F4D-31A8-4844-8538-2B37FB286961}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="rule 2 duped records"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F7760AB4-AAC0-426C-856B-CDB51A324E49}"
+              SQLTask:SqlStatementSource="--hist dupe1&#xA;update [dbo].[XA_ANTHEM_TEMPLATE]&#xA;set [verified]=3, [errortext]='Duplicate incentive xa_anthem_template'&#xA;--SELECT hist.[INDV_INCENTIVE_EVENT_ID]&#xA;FROM [dbo].[XA_ANTHEM_TEMPLATE] AS TEMPLATE&#xA;join [dbo].[XA_ANTHEM_TEMPLATE_HIST] hist&#xA;on TEMPLATE.[MEMBERSHIP_IDENTITY]=hist.[MEMBERSHIP_IDENTITY]&#xA;and template.[VENDOR_ACTIVITY_ID]=hist.[VENDOR_ACTIVITY_ID]&#xA;where (TEMPLATE.[EVENT_COMPLETED_DATE] &#xA;between hist.[EVENT_COMPLETED_DATE]-1 and hist.[EVENT_COMPLETED_DATE]+1)&#xA;and template.verified=1;&#xA;--history dupe 2&#xA;update [dbo].[XA_ANTHEM_TEMPLATE]&#xA;set verified=3, [errortext]='Duplicate record for XA_VENDOR_INCENTIVE_HIST'&#xA;--SELECT hist.* --hist.[INDV_INCENTIVE_EVENT_ID],hist.[VENDOR_INCENTIVE_ID]&#xA;FROM [dbo].[XA_ANTHEM_TEMPLATE] TEMPLATE&#xA;join [dbo].[XA_VENDOR_INCENTIVE_HIST] hist&#xA;on TEMPLATE.[MEMBERSHIP_IDENTITY]=hist.[MEMBER_IDENTITY]&#xA;and template.[VENDOR_ACTIVITY_ID]=hist.[VENDOR_ACTIVITY_ID]&#xA;and TEMPLATE.[VENDOR_MILESTONE_ID]=hist.[VENDOR_MILESTONE_ID]&#xA;and TEMPLATE.[VENDOR_PROGRAM_ID]=hist.[VENDOR_PROGRAM_ID]&#xA;where month(hist.[EVENT_COMPLETED_DATE])= month(template.[EVENT_COMPLETED_DATE])&#xA;and year(hist.[EVENT_COMPLETED_DATE])=year(template.[EVENT_COMPLETED_DATE])&#xA;and template.[verified]=1&#xA;/*&#xA;--dupe check 3, does same milestone and activity exist across different programs&#xA;update [dbo].[XA_ANTHEM_TEMPLATE]&#xA;set verified=3, [errortext]='Duplicate record for XA_VENDOR_INCENTIVE_HIST, dupe program'--98&#xA;--SELECT hist.* --hist.[INDV_INCENTIVE_EVENT_ID],hist.[VENDOR_INCENTIVE_ID]&#xA;FROM [dbo].[XA_ANTHEM_TEMPLATE] TEMPLATE&#xA;join [dbo].[XA_VENDOR_INCENTIVE_HIST] hist&#xA;on TEMPLATE.[MEMBERSHIP_IDENTITY]=hist.[MEMBER_IDENTITY]&#xA;and template.[VENDOR_ACTIVITY_ID]=hist.[VENDOR_ACTIVITY_ID]&#xA;and TEMPLATE.[VENDOR_MILESTONE_ID]=hist.[VENDOR_MILESTONE_ID]&#xA;--and TEMPLATE.[VENDOR_PROGRAM_ID]=hist.[VENDOR_PROGRAM_ID]&#xA;where month(hist.[EVENT_COMPLETED_DATE])= month(template.[EVENT_COMPLETED_DATE])&#xA;and year(hist.[EVENT_COMPLETED_DATE])=year(template.[EVENT_COMPLETED_DATE])&#xA;and template.[verified]=1&#xA;*/&#xA;---dupe check 4, what about month time fence&#xA;update [dbo].[XA_ANTHEM_TEMPLATE]&#xA;set verified=3, [errortext]='Duplicate record for XA_VENDOR_INCENTIVE_HIST, dupe program in prior month'--98&#xA;--SELECT hist.* --hist.[INDV_INCENTIVE_EVENT_ID],hist.[VENDOR_INCENTIVE_ID]&#xA;FROM [dbo].[XA_ANTHEM_TEMPLATE] TEMPLATE&#xA;join [dbo].[XA_VENDOR_INCENTIVE_HIST] hist&#xA;on TEMPLATE.[MEMBERSHIP_IDENTITY]=hist.[MEMBER_IDENTITY]&#xA;and template.[VENDOR_ACTIVITY_ID]=hist.[VENDOR_ACTIVITY_ID]&#xA;and TEMPLATE.[VENDOR_MILESTONE_ID]=hist.[VENDOR_MILESTONE_ID]&#xA;and TEMPLATE.[VENDOR_PROGRAM_ID]=hist.[VENDOR_PROGRAM_ID]&#xA;where (month(hist.[EVENT_COMPLETED_DATE]) between month(template.[EVENT_COMPLETED_DATE])-1&#xA;and  month(template.[EVENT_COMPLETED_DATE])+1)&#xA;and year(hist.[EVENT_COMPLETED_DATE])=year(template.[EVENT_COMPLETED_DATE])&#xA;and template.[verified]=1--one month gave me 652 dupes; 3 months 4729; 6 months 4729; 2 months 4729&#xA;-------" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\rules of disqualification\SET recordcountverified"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{BB606CD7-4459-491C-A720-A8611EFC4124}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SET recordcountverified"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="select count(*) as recordcountverified&#xA;from [dbo].[XA_ANTHEM_TEMPLATE]&#xA;where verified=1"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="recordcountverified"
+                SQLTask:DtsVariableName="User::recordcountverified" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\rules of disqualification.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{C12D61C0-ACAF-4E80-81DB-EC7A2F5820BA}"
+          DTS:From="Package\rules of disqualification\rule 1 incomplete data"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\rules of disqualification\rule 2 duped records" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\rules of disqualification.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{07B4C151-3082-46BE-B8AA-327F1F13C1FF}"
+          DTS:From="Package\rules of disqualification\rule 2 duped records"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\rules of disqualification\SET recordcountverified" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\set batchid and count"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{02B7C806-FE07-4075-B1B9-1F5BDE4201D4}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="set batchid and count">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\set batchid and count\batchid and count"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2A33154C-447B-4261-B7A6-8A64FF94E5E2}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="batchid and count"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{51C172BE-0B1C-4962-8F26-935B1685E877}"
+              SQLTask:SqlStatementSource="--all other checks must be complete&#xA;--set batchid&#xA;declare @vbatch_id int;&#xA;set @vbatch_id=(select max(batch_id)+1 from [dbo].[XA_ANTHEM_TEMPLATE_HIST])&#xA;--select @vbatch_id--54151331&#xA;update [dbo].[XA_ANTHEM_TEMPLATE] &#xA;set batch_id=@vbatch_id&#xA;where verified=1&#xA;--set batch_count&#xA;declare @vbatch_count int;&#xA;--select count(*) from [dbo].[XA_ANTHEM_TEMPLATE] where batch_id is not null&#xA;set @vbatch_count = (select count(*) from [dbo].[XA_ANTHEM_TEMPLATE] where batch_id is not null and verified=1);&#xA;update [dbo].[XA_ANTHEM_TEMPLATE] &#xA;set batch_count=@vbatch_count&#xA;where verified=1" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\set variables"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:Disabled="True"
+      DTS:DTSID="{3B6F6B62-42DB-41A1-B0F8-2D3F3240A6E4}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="set variables">
+      <DTS:Variables />
+      <DTS:Executables />
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\successful completion"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Description="Send Mail Task"
+      DTS:DTSID="{EB54F598-DFF8-4827-B6AE-1513B3886128}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="successful completion"
+      DTS:TaskContact="Send Mail Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="9">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="CCLine">@[User::AdminEmailCC]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[User::AdminEmailFrom]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[User::AdminEmailTo]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{D5BD80E0-E395-46F0-99B1-ADF9739F16C9}"
+          SendMailTask:From="BIExtractOps@sharecare.com"
+          SendMailTask:To="BIExtractOps@sharecare.com"
+          SendMailTask:CC="randall.moore@sharecare.com"
+          SendMailTask:Subject="ANTHEM HALLMARK INCENTIVE SSIS RAN SUCCESSFULLY"
+          SendMailTask:MessageSource="PACKAGE GENERATED A FILE." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{7E577D1F-DF94-46E5-ACA1-2B5DB28DD83A}"
+      DTS:From="Package\load new history"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\create xa_anthem_template" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{49B941EF-9611-4724-B98B-01B980E354A0}"
+      DTS:From="Package\set batchid and count"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\export file" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 10]"
+      DTS:CreationName=""
+      DTS:DTSID="{28B609E3-5534-4B69-9F4F-16D12517DA71}"
+      DTS:From="Package\rules of disqualification"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 10"
+      DTS:To="Package\an error occurred at step 3"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 11]"
+      DTS:CreationName=""
+      DTS:DTSID="{5D0D6265-C864-4158-BF4A-EFB8BEFC5B54}"
+      DTS:From="Package\set batchid and count"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 11"
+      DTS:To="Package\an error occurred at step 4"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 12]"
+      DTS:CreationName=""
+      DTS:DTSID="{DEA022E2-25B6-4AE0-B91E-95A9B197A124}"
+      DTS:From="Package\export file"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 12"
+      DTS:To="Package\an error occurred at step 5"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 13]"
+      DTS:CreationName=""
+      DTS:DTSID="{144FBFBB-A1CC-46CD-A212-6F804013B9A9}"
+      DTS:From="Package\FINAL CLEANUP"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 13"
+      DTS:To="Package\an error occurred at step 6"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 14]"
+      DTS:CreationName=""
+      DTS:DTSID="{7C6EF430-BDFA-4146-96FB-54E4981BB8DE}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::recordcountverified]&lt;=0"
+      DTS:From="Package\rules of disqualification"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 14"
+      DTS:To="Package\export file 1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 15]"
+      DTS:CreationName=""
+      DTS:DTSID="{AAB5A661-E1B7-4C64-98FE-BCAC47958ED2}"
+      DTS:From="Package\export file 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 15"
+      DTS:To="Package\an error occurred at step 5B"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{68A02823-6A91-4911-ACED-E85C5DAA013C}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::recordcountverified]&gt;0"
+      DTS:From="Package\rules of disqualification"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\set batchid and count" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{B8B39A27-FA51-4B1D-A7CD-CBE64B5A498E}"
+      DTS:From="Package\create xa_anthem_template"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\rules of disqualification" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{7D318CA5-9595-4C35-A11F-787576E7F096}"
+      DTS:From="Package\export file"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\FINAL CLEANUP" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{FC2E9D8D-E9FE-41A9-889B-1973BDC47D23}"
+      DTS:From="Package\set variables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\load new history" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{C93D5FE8-F9F1-41A0-BC18-DCEFB96B255E}"
+      DTS:From="Package\export file 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\no records to process" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{EFC2CC72-A03D-4064-AB49-E7C7BB86A32B}"
+      DTS:From="Package\FINAL CLEANUP"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\successful completion" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{43991B49-2C3D-4644-93E5-D7861369DCD2}"
+      DTS:From="Package\load new history"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\an error occurred at step 1"
+      DTS:Value="1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{6B2AF6BA-97D1-4248-A12A-DDDB705D1D8E}"
+      DTS:From="Package\create xa_anthem_template"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\an error occurred at step 2"
+      DTS:Value="1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="128" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\an error occurred at step _"
+          TopLeft="1797.13688147396,2358.33333759507" />
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\an error occurred at step 1"
+          TopLeft="692.970230515603,670.091667737911" />
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\an error occurred at step 2"
+          TopLeft="1020.22022582795,945.866660219828" />
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\an error occurred at step 3"
+          TopLeft="1035.6993907639,1285.2666636757" />
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\an error occurred at step 4"
+          TopLeft="1059.4702238225,1581.46666133563" />
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\an error occurred at step 5"
+          TopLeft="984.053558726661,2115.32499356285" />
+        <NodeLayout
+          Size="213.333333333334,42.6666666666667"
+          Id="Package\an error occurred at step 5B"
+          TopLeft="217.261902872651,1890.24999552518" />
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\an error occurred at step 6"
+          TopLeft="1010.3868912901,2395.36666033606" />
+        <NodeLayout
+          Size="162.666666666667,42"
+          Id="Package\create xa_anthem_template\collect records to process"
+          TopLeft="19.6666666542492,5.93333332558473" />
+        <NodeLayout
+          Size="189.333333333334,42"
+          Id="Package\create xa_anthem_template\update for membership"
+          TopLeft="5.50000000000001,107.5" />
+        <EdgeLayout
+          Id="Package\create xa_anthem_template.PrecedenceConstraints[Constraint]"
+          TopLeft="100.583333327125,47.9333333255847">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.5666666744153"
+              Start="0,0"
+              End="0,52.0666666744153">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.0666666744153" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="The template is the work table, information needed for the export are collected here and records qualified."
+          ParentId="Package\create xa_anthem_template"
+          Size="642,37.3333333333334"
+          Id="0ba6d8b0-2702-4d76-8b03-1f24ed01f1aa"
+          TopLeft="255.166666666667,109.833333333333">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="902.666666666667,205.333333333334"
+          Size="902.666666666667,248"
+          Id="Package\create xa_anthem_template"
+          TopLeft="908.720229106203,686.833333333333" />
+        <NodeLayout
+          Size="188,42"
+          Id="Package\export file\export output template"
+          TopLeft="22.8333333333334,210.166666666667" />
+        <NodeLayout
+          Size="122.666666666667,42.6666666666667"
+          Id="Package\export file\move file"
+          TopLeft="428.1904665402,397.666660943769" />
+        <NodeLayout
+          Size="198,42"
+          Id="Package\export file\populate output template"
+          TopLeft="17.8333333333333,108.166666666667" />
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\export file\set date time string 1"
+          TopLeft="31.5,5.49999999999993" />
+        <NodeLayout
+          Size="222.666666666667,42.6666666666667"
+          Id="Package\export file\set the errortext with filename"
+          TopLeft="5.50000000000004,312.166666666667" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\export file\TF Secure FTP Task"
+          TopLeft="230.428554345455,352.380953377202" />
+        <EdgeLayout
+          Id="Package\export file.PrecedenceConstraints[Constraint]"
+          TopLeft="116.833333333333,150.166666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file.PrecedenceConstraints[Constraint 1]"
+          TopLeft="116.833333333333,48.1666666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file.PrecedenceConstraints[Constraint 2]"
+          TopLeft="116.833333333333,252.166666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60.0000000000001"
+              Start="0,0"
+              End="0,52.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file.PrecedenceConstraints[Constraint 3]"
+          TopLeft="228.166666666667,329.880953377202">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="88.9285543454546,22.5"
+              Start="0,0"
+              End="88.9285543454546,15">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="84.9285543454546,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="84.9285543454546,0"
+                    Point2="88.9285543454546,0"
+                    Point3="88.9285543454546,4" />
+                  <mssgle:LineSegment
+                    End="88.9285543454546,15" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file.PrecedenceConstraints[Constraint 4]"
+          TopLeft="403.761887678788,373.714286710535">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="24.4285788614123,45.2857075665677"
+              Start="0,0"
+              End="16.9285788614123,45.2857075665677">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="8.21428943070617,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.21428943070617,0"
+                    Point2="12.2142894307062,0"
+                    Point3="12.2142894307062,4" />
+                  <mssgle:LineSegment
+                    End="12.2142894307062,41.2857075665677" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.2142894307062,41.2857075665677"
+                    Point2="12.2142894307062,45.2857075665677"
+                    Point3="16.2142894307062,45.2857075665677" />
+                  <mssgle:LineSegment
+                    End="16.9285788614123,45.2857075665677" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="The output template stages the data the way it looks in the export."
+          ParentId="Package\export file"
+          Size="408,37.3333333333334"
+          Id="2573c833-2370-4027-8958-fc1b99021e08"
+          TopLeft="288.833333333333,314.833333333333">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="702.666666666667,495.333333333334"
+          Size="702.666666666667,538"
+          Id="Package\export file"
+          TopLeft="1008.30356244574,1627.5" />
+        <NodeLayout
+          Size="188,42"
+          Id="Package\export file 1\export output template"
+          TopLeft="21.6428571605967,210.166666666667" />
+        <NodeLayout
+          Size="122.666666666667,42.6666666666667"
+          Id="Package\export file 1\move file"
+          TopLeft="456.714277642823,259.047614398457" />
+        <NodeLayout
+          Size="198,42"
+          Id="Package\export file 1\populate output template"
+          TopLeft="17.8333333333333,108.166666666667" />
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\export file 1\set date time string 1"
+          TopLeft="31.5,5.49999999999993" />
+        <NodeLayout
+          Size="173.333333333334,42.6666666666667"
+          Id="Package\export file 1\TF Secure FTP Task 1"
+          TopLeft="327.285710578164,182.428570686919" />
+        <EdgeLayout
+          Id="Package\export file 1.PrecedenceConstraints[Constraint]"
+          TopLeft="116.238095246965,150.166666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file 1.PrecedenceConstraints[Constraint 1]"
+          TopLeft="116.833333333333,48.1666666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file 1.PrecedenceConstraints[Constraint 2]"
+          TopLeft="209.642857160597,231.166666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="117.642853417567,-27.4047626464145"
+              Start="0,0"
+              End="110.142853417567,-27.4047626464145">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="54.8214267087834,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="54.8214267087834,0"
+                    Point2="58.8214267087834,0"
+                    Point3="58.8214267087834,-4" />
+                  <mssgle:LineSegment
+                    End="58.8214267087834,-23.4047626464145" />
+                  <mssgle:CubicBezierSegment
+                    Point1="58.8214267087834,-23.4047626464145"
+                    Point2="58.8214267087834,-27.4047626464145"
+                    Point3="62.8214267087834,-27.4047626464145" />
+                  <mssgle:LineSegment
+                    End="110.142853417567,-27.4047626464145" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file 1.PrecedenceConstraints[Constraint 3]"
+          TopLeft="413.95237724483,225.095237353586">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="104.095233731327,33.952377044871"
+              Start="0,0"
+              End="104.095233731327,26.452377044871">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.9761885224355" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.9761885224355"
+                    Point2="0,16.9761885224355"
+                    Point3="4,16.9761885224355" />
+                  <mssgle:LineSegment
+                    End="100.095233731327,16.9761885224355" />
+                  <mssgle:CubicBezierSegment
+                    Point1="100.095233731327,16.9761885224355"
+                    Point2="104.095233731327,16.9761885224355"
+                    Point3="104.095233731327,20.9761885224355" />
+                  <mssgle:LineSegment
+                    End="104.095233731327,26.452377044871" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="The output template stages the data the way it looks in the export."
+          ParentId="Package\export file 1"
+          Size="408,37.3333333333334"
+          Id="29e30ee5-9bbd-42eb-a24f-00a947b0cb75"
+          TopLeft="18.5208373613031,268.250000832975">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <AnnotationLayout
+          Text="only populating trailer with zero records"
+          ParentId="Package\export file 1"
+          FontInfo="{assembly:Null}"
+          Size="241.333333333334,40"
+          Id="550163c8-d4e8-47b5-aa86-9e3a55c06de5"
+          TopLeft="243.208329530433,102.374996425957" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="689.333333333334,362"
+          Size="689.333333333334,404.666666666667"
+          Id="Package\export file 1"
+          TopLeft="104.241072589398,1350.66666538815" />
+        <NodeLayout
+          Size="206.666666666667,42"
+          Id="Package\FINAL CLEANUP\MOVE TO TEMPLATE_HIST"
+          TopLeft="5.49999999999999,10.1666666666667" />
+        <AnnotationLayout
+          Text="This will be enabled once QA testing is completed; doing so before would complicate testing."
+          ParentId="Package\FINAL CLEANUP"
+          Size="358,51.3333333333334"
+          Id="f9aa87c0-951b-41d7-beba-7f246a6ac04d"
+          TopLeft="272.833333333333,5.50000000000007">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="636,106.666666666667"
+          Size="636,149.333333333334"
+          Id="Package\FINAL CLEANUP"
+          TopLeft="1042.09985873514,2203.36666665117" />
+        <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\load new history\get member map\load member_map"
+          TopLeft="5.49999999999994,5.49999999999989" />
+        <AnnotationLayout
+          Text="We collect only members, for HP_ANTHEM client ID, that have incentive programs."
+          ParentId="Package\load new history\get member map"
+          Size="497.333333333334,37.3333333333334"
+          Id="101a1cb4-0d22-442d-aa18-b763ff7673e0"
+          TopLeft="233.166666666667,7.83333333333322">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <AnnotationLayout
+          Text="the new map is disabled"
+          ParentId="Package\load new history\get member map"
+          FontInfo="{assembly:Null}"
+          Size="157.333333333334,40"
+          Id="34fe287e-6d8b-4d64-9a5a-9c1742a8c09f"
+          TopLeft="191,64" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="736,178.666666666667"
+          Size="736,222"
+          Id="Package\load new history\get member map"
+          TopLeft="186.833333333333,174.166666666667" />
+        <NodeLayout
+          Size="268,42"
+          Id="Package\load new history\get sc_incentive_member_history\collect sc_incent_member_history_temp"
+          TopLeft="5.08333333954212,10.5999999922514" />
+        <AnnotationLayout
+          Text="need to set parametertize values for startdate and enddate; the query uses between function which is NOT equal to between dates&#xA;We collect record from vertica.incentive.sc_incent_member_history based on reward_earned_date."
+          ParentId="Package\load new history\get sc_incentive_member_history"
+          Size="769.333333333334,51.3333333333334"
+          Id="db7473c3-3e93-4229-a035-3994de0f5bf9"
+          TopLeft="333.833333333333,5.49999999999996">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="1109.33333333334,112"
+          Size="1109.33333333334,154.666666666667"
+          Id="Package\load new history\get sc_incentive_member_history"
+          TopLeft="5.5,5.49999999999993" />
+        <EdgeLayout
+          Id="Package\load new history.PrecedenceConstraints[Constraint]"
+          TopLeft="560.166666666667,160.166666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="362.666666666666,125"
+              Start="0,0"
+              End="355.166666666666,125">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,121" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,121"
+                    Point2="0,125"
+                    Point3="4,125" />
+                  <mssgle:LineSegment
+                    End="355.166666666666,125" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="1120,450.666666666667"
+          Size="1120,494"
+          Id="Package\load new history"
+          TopLeft="800.053562439534,163.5" />
+        <NodeLayout
+          Size="181.333333333334,42.6666666666667"
+          Id="Package\no records to process"
+          TopLeft="634.949400381363,1891.57498854563" />
+        <NodeLayout
+          Size="185.333333333334,42.6666666666667"
+          Id="Package\rules of disqualification\rule 1 incomplete data"
+          TopLeft="28,5.49999999999993" />
+        <NodeLayout
+          Size="177.333333333334,42"
+          Id="Package\rules of disqualification\rule 2 duped records"
+          TopLeft="35.3333332836629,66.1333340849478" />
+        <NodeLayout
+          Size="192,42.6666666666667"
+          Id="Package\rules of disqualification\SET recordcountverified"
+          TopLeft="30.0833332526188,129.133334782322" />
+        <EdgeLayout
+          Id="Package\rules of disqualification.PrecedenceConstraints[Constraint]"
+          TopLeft="28,26.8333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="7.33333328366285,60.3000007516146"
+              Start="0,0"
+              End="-0.166666716337147,60.3000007516146">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,0"
+                    Point2="-22.5,0"
+                    Point3="-22.5,4" />
+                  <mssgle:LineSegment
+                    End="-22.5,56.3000007516146" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5,56.3000007516146"
+                    Point2="-22.5,60.3000007516146"
+                    Point3="-18.5,60.3000007516146" />
+                  <mssgle:LineSegment
+                    End="-0.166666716337147,60.3000007516146" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\rules of disqualification.PrecedenceConstraints[Constraint 1]"
+          TopLeft="35.3333332836629,92.8000007516145">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-5.25000003104408,57.6666673640413"
+              Start="0,0"
+              End="-12.7500000310441,57.6666673640413">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-23.7500000310441,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-23.7500000310441,0"
+                    Point2="-27.7500000310441,0"
+                    Point3="-27.7500000310441,4" />
+                  <mssgle:LineSegment
+                    End="-27.7500000310441,53.6666673640413" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-27.7500000310441,53.6666673640413"
+                    Point2="-27.7500000310441,57.6666673640413"
+                    Point3="-23.7500000310441,57.6666673640413" />
+                  <mssgle:LineSegment
+                    End="-12.7500000310441,57.6666673640413" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Incomplete data is the big disqualifier; mostly member info.  &#xA;Duplicates are history records."
+          ParentId="Package\rules of disqualification"
+          Size="374.666666666667,51.3333333333334"
+          Id="3f118226-3d62-4b45-9bdf-a42b36dcad98"
+          TopLeft="226.916667417933,16.5333368434506">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="829.333333333334,226.666666666667"
+          Size="829.333333333334,270"
+          Id="Package\rules of disqualification"
+          TopLeft="704.173932823012,992.722222248051" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\set batchid and count\batchid and count"
+          TopLeft="5.5,5.5" />
+        <AnnotationLayout
+          Text="The batchid is just a number, the file does not contain this number."
+          ParentId="Package\set batchid and count"
+          Size="408,37.3333333333334"
+          Id="a843f99f-5497-4952-ba24-87ad78411988"
+          TopLeft="230.5,7.83333333333333">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11.25"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="644,102.666666666667"
+          Size="644,145.333333333334"
+          Id="Package\set batchid and count"
+          TopLeft="1037.63689577908,1422.16666666667" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205.333333333334,54.6666666666667"
+          Size="205.333333333334,98"
+          Id="Package\set variables"
+          TopLeft="1256.97022911241,5.5" />
+        <NodeLayout
+          Size="181.333333333334,42.6666666666667"
+          Id="Package\successful completion"
+          TopLeft="1230.47022484075,2391.06666012685" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="1545.38689577287,657.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-185.333333333333,29.333333333333"
+              Start="0,0"
+              End="-185.333333333333,21.833333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.75844032334748" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.75844032334748"
+                    Point2="0,11.7584403233475"
+                    Point3="-4,11.7584403233475" />
+                  <mssgle:LineSegment
+                    End="-181.333333333333,11.7584403233475" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-181.333333333333,11.7584403233475"
+                    Point2="-185.333333333333,11.7584403233475"
+                    Point3="-185.333333333333,15.7584403233475" />
+                  <mssgle:LineSegment
+                    End="-185.333333333333,21.833333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="1465.63689577908,1567.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-105.999999999999,59.9999999999968"
+              Start="0,0"
+              End="-105.999999999999,52.4999999999968">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.0892193308537" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.0892193308537"
+                    Point2="0,24.0892193308537"
+                    Point3="-4,24.0892193308537" />
+                  <mssgle:LineSegment
+                    End="-101.999999999999,24.0892193308537" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-101.999999999999,24.0892193308537"
+                    Point2="-105.999999999999,24.0892193308537"
+                    Point3="-105.999999999999,28.0892193308537" />
+                  <mssgle:LineSegment
+                    End="-105.999999999999,52.4999999999968" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 10]"
+          TopLeft="1118.84059948968,1262.72222224805">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="20.1921246075588,22.5444414276528"
+              Start="0,0"
+              End="20.1921246075588,15.0444414276528">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.27222071382641" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.27222071382641"
+                    Point2="0,11.2722207138264"
+                    Point3="4,11.2722207138264" />
+                  <mssgle:LineSegment
+                    End="16.1921246075588,11.2722207138264" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16.1921246075588,11.2722207138264"
+                    Point2="20.1921246075588,11.2722207138264"
+                    Point3="20.1921246075588,15.2722207138264" />
+                  <mssgle:LineSegment
+                    End="20.1921246075588,15.0444414276528" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-5.1452853524706,16.2722207138264,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 11]"
+          TopLeft="1253.63689577908,1567.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.4999947100877,35.2999946689574"
+              Start="0,0"
+              End="4.99999471008766,35.2999946689574">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.2999946689574" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.2999946689574"
+                    Point2="0,35.2999946689574"
+                    Point3="4,35.2999946689574" />
+                  <mssgle:LineSegment
+                    End="4.99999471008766,35.2999946689574" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-10.7413503012062,40.2999946689574,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 12]"
+          TopLeft="1008.30356244574,1896.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="79.0833296142503,218.82499356285"
+              Start="0,0"
+              End="79.0833296142503,211.32499356285">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="75.0833296142503,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="75.0833296142503,0"
+                    Point2="79.0833296142503,0"
+                    Point3="79.0833296142503,4" />
+                  <mssgle:LineSegment
+                    End="79.0833296142503,211.32499356285" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="63.8419819580003,-15.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 13]"
+          TopLeft="1255.43319206848,2352.6999999845">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-141.71296744504,42.6666603515546"
+              Start="0,0"
+              End="-141.71296744504,35.1666603515546">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.1309050345012" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.1309050345012"
+                    Point2="0,17.1309050345012"
+                    Point3="-4,17.1309050345012" />
+                  <mssgle:LineSegment
+                    End="-137.71296744504,17.1309050345012" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-137.71296744504,17.1309050345012"
+                    Point2="-141.71296744504,17.1309050345012"
+                    Point3="-141.71296744504,21.1309050345012" />
+                  <mssgle:LineSegment
+                    End="-141.71296744504,35.1666603515546" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-86.09783137877,22.1309050345012,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 14]"
+          TopLeft="913.507266156346,1262.72222224805">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-464.59952690028,87.9444431400991"
+              Start="0,0"
+              End="-464.59952690028,80.4444431400991">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5027298568281" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.5027298568281"
+                    Point2="0,29.5027298568281"
+                    Point3="-4,29.5027298568281" />
+                  <mssgle:LineSegment
+                    End="-460.59952690028,29.5027298568281" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-460.59952690028,29.5027298568281"
+                    Point2="-464.59952690028,29.5027298568281"
+                    Point3="-464.59952690028,33.5027298568281" />
+                  <mssgle:LineSegment
+                    End="-464.59952690028,80.4444431400991" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-240.29976345014,34.5027298568281,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 15]"
+          TopLeft="335.35218370051,1755.33333205482">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11.4236141611923,134.916663470363"
+              Start="0,0"
+              End="-11.4236141611923,127.416663470363">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.1541219641752" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,50.1541219641752"
+                    Point2="0,54.1541219641752"
+                    Point3="-4,54.1541219641752" />
+                  <mssgle:LineSegment
+                    End="-7.42361416119229,54.1541219641752" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7.42361416119229,54.1541219641752"
+                    Point2="-11.4236141611923,54.1541219641752"
+                    Point3="-11.4236141611923,58.1541219641752" />
+                  <mssgle:LineSegment
+                    End="-11.4236141611923,127.416663470363" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-20.9531547368461,59.1541219641752,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="1323.67393282302,1240.05555558138">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="35.9629629560641,182.111111085286"
+              Start="0,0"
+              End="35.9629629560641,174.611111085286">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.0931420507975" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,57.0931420507975"
+                    Point2="0,61.0931420507975"
+                    Point3="4,61.0931420507975" />
+                  <mssgle:LineSegment
+                    End="31.9629629560641,61.0931420507975" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31.9629629560641,61.0931420507975"
+                    Point2="35.9629629560641,61.0931420507975"
+                    Point3="35.9629629560641,65.0931420507976" />
+                  <mssgle:LineSegment
+                    End="35.9629629560641,174.611111085286" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="9.98148147803205,66.0931420507975,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1210.94245132843,934.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-92.4351851720778,57.8888889147178"
+              Start="0,0"
+              End="-92.4351851720778,50.3888889147178">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.2170123633194" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.2170123633194"
+                    Point2="0,23.2170123633194"
+                    Point3="-4,23.2170123633194" />
+                  <mssgle:LineSegment
+                    End="-88.4351851720778,23.2170123633194" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-88.4351851720778,23.2170123633194"
+                    Point2="-92.4351851720778,23.2170123633194"
+                    Point3="-92.4351851720778,27.2170123633194" />
+                  <mssgle:LineSegment
+                    End="-92.4351851720778,50.3888889147178" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="1359.86837725711,2165.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37.8666666511699"
+              Start="0,0"
+              End="0,30.3666666511699">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.3666666511699" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="1359.84522910931,103.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="562.463294811621,1755.33333205482">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163.152772236409,136.241656490813"
+              Start="0,0"
+              End="163.152772236409,128.741656490813">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.6859601506931" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,50.6859601506931"
+                    Point2="0,54.6859601506931"
+                    Point3="4,54.6859601506931" />
+                  <mssgle:LineSegment
+                    End="159.152772236409,54.6859601506931" />
+                  <mssgle:CubicBezierSegment
+                    Point1="159.152772236409,54.6859601506931"
+                    Point2="163.152772236409,54.6859601506931"
+                    Point3="163.152772236409,58.6859601506931" />
+                  <mssgle:LineSegment
+                    End="163.152772236409,128.741656490813" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="1360.09985873515,2352.6999999845">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-38.9629672277313,38.3666601423424"
+              Start="0,0"
+              End="-38.9629672277313,30.8666601423424">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.1833300711712" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.1833300711712"
+                    Point2="0,19.1833300711712"
+                    Point3="-4,19.1833300711712" />
+                  <mssgle:LineSegment
+                    End="-34.9629672277313,19.1833300711712" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-34.9629672277313,19.1833300711712"
+                    Point2="-38.9629672277313,19.1833300711712"
+                    Point3="-38.9629672277313,23.1833300711712" />
+                  <mssgle:LineSegment
+                    End="-38.9629672277313,30.8666601423424" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="800.053562439534,410.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-3.74999859059812,259.591667737911"
+              Start="0,0"
+              End="-3.74999859059812,252.091667737911">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0.250001409401875,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0.250001409401875,0"
+                    Point2="-3.74999859059812,0"
+                    Point3="-3.74999859059812,4" />
+                  <mssgle:LineSegment
+                    End="-3.74999859059812,252.091667737911" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-18.9913462468481,-15.7490234375,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="1210.94245132843,934.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="15.9444411661887,32.3666602198288"
+              Start="0,0"
+              End="8.44444116618871,32.3666602198288">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.3666602198288" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.3666602198288"
+                    Point2="0,32.3666602198288"
+                    Point3="4,32.3666602198288" />
+                  <mssgle:LineSegment
+                    End="8.44444116618871,32.3666602198288" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-9.01912707315564,37.3666602198288,30.4826953125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="--QA&#xA;--these counts prove record counts tie&#xA;select count(*) from [dbo].[XA_ANTHEM_TEMPLATE] where verified=1;&#xA;select count(*)-2 from [dbo].[XA_ANTHEM_OUTPUT_TEMPLATE];"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="398,88"
+          Id="54400bea-4944-4e80-8a57-f70e295de40a"
+          TopLeft="1738.63689577908,2235.83333333333" />
+        <AnnotationLayout
+          Text="select *&#xA;from [dbo].[XA_ANTHEM_TEMPLATE]&#xA;where [verified]=1 and [MEMBERSHIP_IDENTITY] is null;&#xA;--why so many nulls&#xA;--the example below shows the org_unit for hp_anthem has no incentive program&#xA;/*&#xA;select ocx.ouid, ocx.ouname, rawfd.guid, rawfd.misc100&#xA;from scp.ah_member_eligibility_RawFileData_US rawfd--need guid&#xA;join scp.v_organizational_unit_contract_xref ocx&#xA;on rawfd.org_unit_id=ocx.ouname&#xA;where rawfd.guid in ('46124208','50600979')&#xA;/*&#xA;501855 ANT-Dignity_Health 46124208 CHW-ANGELICA-19910811-238833&#xA;501860 ANT-ERC_Fitness 50600979 6157194A1B0B485E525FBA537AA1B5B5&#xA;*/&#xA;*/"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="461.333333333334,279.333333333334"
+          Id="8091fc52-9d62-4b06-9bac-fbc09ca75ace"
+          TopLeft="2196.97022911241,2140.16666666667" />
+        <AnnotationLayout
+          Text="make sure there are NO other disabled objects and history is clear&#xA;in production, anthemincentives1_prod.cmd can pass parameters&#xA;the package uses 2018-01-01 as default dates, if a date besides this&#xA;is passed to package; the package will use it; otherwise startdate is &#xA;getdate()-30 and enddate is getdate() as runtime."
+          ParentId="Package"
+          Size="405.333333333334,90.6666666666667"
+          Id="af569e84-8a48-4700-91cf-287c5e7feea2"
+          TopLeft="803.303560893538,34.6666660467784">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="11"
+              Color="#FFFF0000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <AnnotationLayout
+          Text="control is passed if there are records to process"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="278.666666666667,40"
+          Id="9206e017-b0d3-4c6c-a2f0-44a7bd98867f"
+          TopLeft="1369.30355592649,1315.76666464428" />
+        <AnnotationLayout
+          Text="The package uses Parameter values for Variable values."
+          ParentId="Package"
+          Size="420,40.6666666666667"
+          Id="3cae2100-226b-41c9-a884-c6ac7b5dd5a7"
+          TopLeft="274.345235355376,47.6666658143203">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="14"
+              Color="#FF000000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\export file\export output template">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="98,42"
+          Id="Package\export file\export output template\Sort"
+          TopLeft="196,235" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\export file\export output template\output template"
+          TopLeft="203,135" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\export file\export output template\Flat File Destination"
+          TopLeft="179,362" />
+        <EdgeLayout
+          Id="Package\export file\export output template.Paths[Sort Output]"
+          TopLeft="245,277">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="20,85"
+              Start="0,0"
+              End="20,77.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38.5"
+                    Point2="0,42.5"
+                    Point3="4,42.5" />
+                  <mssgle:LineSegment
+                    End="16,42.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16,42.5"
+                    Point2="20,42.5"
+                    Point3="20,46.5" />
+                  <mssgle:LineSegment
+                    End="20,77.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file\export output template.Paths[OLE DB Source Output]"
+          TopLeft="280,177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-35,58"
+              Start="0,0"
+              End="-35,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25"
+                    Point2="0,29"
+                    Point3="-4,29" />
+                  <mssgle:LineSegment
+                    End="-31,29" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-31,29"
+                    Point2="-35,29"
+                    Point3="-35,33" />
+                  <mssgle:LineSegment
+                    End="-35,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\export file\export output template\output template">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\export file 1\export output template">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="98,42"
+          Id="Package\export file 1\export output template\Sort"
+          TopLeft="196,235" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\export file 1\export output template\output template"
+          TopLeft="203,135" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\export file 1\export output template\Flat File Destination"
+          TopLeft="179,362" />
+        <EdgeLayout
+          Id="Package\export file 1\export output template.Paths[Sort Output]"
+          TopLeft="245,277">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="20,85"
+              Start="0,0"
+              End="20,77.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38.5"
+                    Point2="0,42.5"
+                    Point3="4,42.5" />
+                  <mssgle:LineSegment
+                    End="16,42.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16,42.5"
+                    Point2="20,42.5"
+                    Point3="20,46.5" />
+                  <mssgle:LineSegment
+                    End="20,77.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\export file 1\export output template.Paths[OLE DB Source Output]"
+          TopLeft="280,177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-35,58"
+              Start="0,0"
+              End="-35,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25"
+                    Point2="0,29"
+                    Point3="-4,29" />
+                  <mssgle:LineSegment
+                    End="-31,29" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-31,29"
+                    Point2="-35,29"
+                    Point3="-35,33" />
+                  <mssgle:LineSegment
+                    End="-35,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
